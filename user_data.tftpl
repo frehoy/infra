@@ -1,0 +1,21 @@
+#cloud-config
+users:
+  - name: frehoy
+    # Allow frehoy to sudo without password
+    sudo:  ALL=(ALL) NOPASSWD:ALL
+    ssh_authorized_keys:
+      - ${pubkey}
+# apt update, upgrade and reboot
+package_reboot_if_required: true
+package_update: true
+package_upgrade: true
+# Install docker compose
+apt:
+  sources:
+    docker.list:
+      source: deb [arch=amd64] https://download.docker.com/linux/ubuntu $RELEASE stable
+      keyid: 9DC858229FC7DD38854AE2D88D81803C0EBFCD88
+packages:
+  - docker-ce
+  - docker-ce-cli
+  - docker-compose-plugin

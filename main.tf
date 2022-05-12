@@ -9,6 +9,7 @@ resource "hcloud_server" "node1" {
   labels = {
     "domain" = var.site_domain
   }
+  user_data = templatefile("user_data.tftpl", { "pubkey" = file("~/.ssh/id_ed25519.pub") })
 }
 
 resource "hcloud_ssh_key" "local_ssh_key" {
@@ -50,3 +51,6 @@ resource "cloudflare_record" "site_ssh" {
   proxied = false # Don't proxy so we can ssh in
 }
 
+output "instance_ip_addr" {
+  value = hcloud_server.node1.ipv4_address
+}
