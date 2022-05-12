@@ -6,7 +6,9 @@ resource "hcloud_server" "node1" {
   ssh_keys = [
     hcloud_ssh_key.local_ssh_key.id,
   ]
-  labels = {}
+  labels = {
+    "domain" = var.site_domain
+  }
 }
 
 resource "hcloud_ssh_key" "local_ssh_key" {
