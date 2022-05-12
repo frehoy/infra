@@ -30,6 +30,15 @@ resource "cloudflare_record" "site_cname" {
   proxied = true
 }
 
+resource "cloudflare_record" "site_www" {
+  zone_id = data.cloudflare_zones.domain.zones[0].id
+  name    = "www"
+  value   = var.site_domain
+  type    = "CNAME"
+  ttl     = 1
+  proxied = true # Proxy for web traffic
+}
+
 resource "cloudflare_record" "site_ssh" {
   zone_id = data.cloudflare_zones.domain.zones[0].id
   name    = "ssh"
